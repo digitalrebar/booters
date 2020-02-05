@@ -17,8 +17,9 @@ if [[ ! -f $1 ]]; then
     echo "as the default script to run."
     exit 1
 fi
+embed="$(readlink -f "$1")"
 docker run \
        -v $PWD/ipxe:/src/ipxe:rw \
-       -v "$1:/src/embed.ipxe:ro" \
+       -v "${embed}:/src/embed.ipxe:ro" \
        ipxebuild /bin/build_ipxe.sh "bios_iso"
 echo "Finished ISO is at ipxe/bin/ipxe.iso"
